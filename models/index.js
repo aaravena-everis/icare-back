@@ -1,0 +1,2 @@
+require('./author');
+require('./event');
