@@ -29,6 +29,11 @@ var eventSchema = new Schema({
         description: { type : String },
         startHour: { type : String },
         finishHour: { type : String },
+        moderators:[{
+            name: { type : String },
+            job: { type : String },
+            image: { type : String }
+        }],
         speechs:[{
             idAuthor : { type : Schema.ObjectId, ref: 'author', required: true },
             title: { type : String },
@@ -36,7 +41,11 @@ var eventSchema = new Schema({
             job: { type : String },
             image: { type : String },
             description: { type : String }
-        }]
+        }],
+        comments:[{
+            idUser : { type : Schema.ObjectId, ref: 'author', required: true },
+            text : { type: String }
+        }],
     }]
 });
 
