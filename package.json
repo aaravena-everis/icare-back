@@ -19,6 +19,8 @@
     "title": "API Documentation icare-server"
   },
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "jwt-simple": "^0.5.1",
     "mongoose": "^5.0.9"
   }
 }

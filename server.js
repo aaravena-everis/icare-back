@@ -39,11 +39,14 @@ mongoose.connect(config.dbEndpoint, config.dbOptions).then(function(){
 var models = require('./models');
 var authorCtrl = require('./controllers/author');
 var eventCtrl = require('./controllers/event');
+var userCtrl = require('./controllers/user');
 
 // API routes
 
 app.use('/api', api);
 api.route('/author/:id').get(authorCtrl.getAuthor);
+api.route('/user').post(userCtrl.add);
+api.route('/authentication').post(userCtrl.authentication);
 api.route('/event').get(eventCtrl.getAllEvents);
 api.route('/event/:id').get(eventCtrl.getEventDetail);
 

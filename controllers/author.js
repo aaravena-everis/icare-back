@@ -49,7 +49,7 @@ exports.getAuthor = function(req, res) {
                         res.status(500).jsonp(response.errorResponse(500,labels.ERRA006, err.message));
                     });
                 }else{
-                    res.status(400).jsonp(response.errorResponse(400,labels.ERRA004));
+                    res.status(400).jsonp(response.errorResponse(400,labels.ERRA008));
                 }
             }).catch(function(err){
                 res.status(500).jsonp(response.errorResponse(500,labels.ERRA006, err.message));
