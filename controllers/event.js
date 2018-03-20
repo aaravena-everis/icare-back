@@ -56,11 +56,11 @@ exports.addCommentToSessionOfEvent = function(req, res) {
             var query = Event.findById(req.body.idEvent).exec();
             var query_res;
             query.then(function(event){
-                res.status(200).jsonp(response.successfulResponse(labels.SUCC000, event));
-                /*if(event) {
+                if(event) {
                     event.forEach(function(session) {
                         if(session._id.toString() == req.body.idSession) {
-                            var comment = {
+                                res.status(200).jsonp(response.successfulResponse(labels.SUCC000, session));
+                           /* var comment = {
                                 idUser : req.body.idUser,
                                 text : req.body.comment
                             };
@@ -74,12 +74,12 @@ exports.addCommentToSessionOfEvent = function(req, res) {
                                 }
                             }).catch(function(err){
                                 res.status(500).jsonp(response.errorResponse(500,labels.ERRA006, err.message));
-                            });
+                            });*/
                         }
                     });
                 } else {
                     res.status(400).jsonp(response.errorResponse(500,labels.ERRA006, err.message));
-                }*/
+                }
             });
         }
     } catch (handler) {
