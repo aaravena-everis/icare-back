@@ -57,8 +57,10 @@ exports.addCommentToSessionOfEvent = function(req, res) {
             query.then(function(event){
                 if(event) {
                     var counter = 0;
+                    var realCounter = 0;
                     event.sessions.forEach(function(session) {
                         if(session._id.toString() == req.body.idSession) {
+                            realCounter = counter;
                             var comment = {
                                 text : req.body.comment
                             };
@@ -66,7 +68,7 @@ exports.addCommentToSessionOfEvent = function(req, res) {
                             var query_res = event.save();
                             query_res.then(function(respuesta) {
                                 if(respuesta){
-                                    res.status(200).jsonp(response.successfulResponse(labels.SUCC013, respuesta.sessions[counter].comments));
+                                    res.status(200).jsonp(response.successfulResponse(labels.SUCC013, respuesta.sessions[realCounter].comments));
                                 }else{
                                     res.status(400).jsonp(response.errorResponse(400,labels.ERRA003))
                                 }
