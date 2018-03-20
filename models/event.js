@@ -41,7 +41,11 @@ var eventSchema = new Schema({
             job: { type : String },
             image: { type : String },
             description: { type : String }
-        }]
+        }],
+        comments:[{
+            idUser : { type : Schema.ObjectId, ref: 'author', required: true },
+            text : { type: String }
+        }],
     }]
 });
 
