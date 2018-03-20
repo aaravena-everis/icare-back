@@ -60,8 +60,8 @@ exports.addCommentToSessionOfEvent = function(req, res) {
                     event.forEach(function(session) {
                         if(session._id.toString() == req.params.idSession) {
                             var comment = {
-                                idUser : req.params.idUser,
-                                text : req.params.comment
+                                idUser : req.body.idUser,
+                                text : req.body.comment
                             };
                             event.session.comments.push(comment);
                             query_res = Event.save(event);
