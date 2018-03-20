@@ -47,3 +47,32 @@ exports.getEventDetail = function(req, res) {
         res.status(500).send(response.errorResponse(500,labels.ERRA006, handler.message));
     }
 };
+
+exports.addCommentToSessionOfEvent = function(req, res) {
+    try {
+        if ((!response.isValidID(req.params.idEvento)) && (!response.isValidID(req.params.idSession)) && (!response.isValidID(req.params.idUser))){
+            res.status(500).send(response.errorResponse(400,labels.ERRA005));
+        } else {
+            var query = Event.findById(req.params.idEvento).exec();
+            var query_res;
+            query.then(function(event){
+                if(event) {
+                    event.forEach(function(session) {
+                        if(session._id.toString() == req.params.idSession) {
+                            var comment = {
+                                idUser : req.params.idUser,
+                                text : req.params.comment
+                            };
+                            event.session.comments.push(comment);
+                            query_res = Event.save(event);
+                        }
+                    });
+                } else {
+                    res.status(400).jsonp(response.errorResponse(500,labels.ERRA006, err.message));
+                }
+            });
+        }
+    } catch (handler) {
+        res.status(500).send(response.errorResponse(500,labels.ERRA006, handler.message));
+    }
+};
