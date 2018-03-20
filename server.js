@@ -46,7 +46,7 @@ app.use('/api', api);
 api.route('/author/:id').get(authorCtrl.getAuthor);
 api.route('/event').get(eventCtrl.getAllEvents);
 api.route('/event/:id').get(eventCtrl.getEventDetail);
-api.route('/comment/:idEvento/:idSession/').post(eventCtrl.addCommentToSessionOfEvent);
+api.route('/comment/add').post(eventCtrl.addCommentToSessionOfEvent);
 
 // Start server
 app.listen(port, function() {

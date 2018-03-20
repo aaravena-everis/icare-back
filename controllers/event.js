@@ -50,21 +50,30 @@ exports.getEventDetail = function(req, res) {
 
 exports.addCommentToSessionOfEvent = function(req, res) {
     try {
-        if ((!response.isValidID(req.params.idEvento)) && (!response.isValidID(req.params.idSession)) && (!response.isValidID(req.params.idUser))){
+        if ((!response.isValidID(req.body.idEvento)) && (!response.isValidID(req.body.idSession)) && (!response.isValidID(req.body.idUser))){
             res.status(500).send(response.errorResponse(400,labels.ERRA005));
         } else {
-            var query = Event.findById(req.params.idEvento).exec();
+            var query = Event.findById(req.body.idEvento).exec();
             var query_res;
             query.then(function(event){
                 if(event) {
                     event.forEach(function(session) {
-                        if(session._id.toString() == req.params.idSession) {
+                        if(session._id.toString() == req.body.idSession) {
                             var comment = {
                                 idUser : req.body.idUser,
                                 text : req.body.comment
                             };
                             event.session.comments.push(comment);
                             query_res = Event.save(event);
+                            query_res.then(function(respuesta){
+                                if(respuesta){
+                                    res.status(200).jsonp(response.successfulResponse(labels.SUCC000, respuesta));
+                                }else{
+                                    res.status(400).jsonp(response.errorResponse(400,labels.ERRA003))
+                                }
+                            }).catch(function(err){
+                                res.status(500).jsonp(response.errorResponse(500,labels.ERRA006, err.message));
+                            });
                         }
                     });
                 } else {
