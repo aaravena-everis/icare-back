@@ -50,13 +50,14 @@ exports.getEventDetail = function(req, res) {
 
 exports.addCommentToSessionOfEvent = function(req, res) {
     try {
-        if ((!response.isValidID(req.body.idEvento)) && (!response.isValidID(req.body.idSession)) && (!response.isValidID(req.body.idUser))){
+        if ((!response.isValidID(req.body.idEvent)) && (!response.isValidID(req.body.idSession)) && (!response.isValidID(req.body.idUser))){
             res.status(500).send(response.errorResponse(400,labels.ERRA005));
         } else {
-            var query = Event.findById(req.body.idEvento).exec();
+            var query = Event.findById(req.body.idEvent).exec();
             var query_res;
             query.then(function(event){
-                if(event) {
+                res.status(200).jsonp(response.successfulResponse(labels.SUCC000, event));
+                /*if(event) {
                     event.forEach(function(session) {
                         if(session._id.toString() == req.body.idSession) {
                             var comment = {
@@ -64,10 +65,10 @@ exports.addCommentToSessionOfEvent = function(req, res) {
                                 text : req.body.comment
                             };
                             event.session.comments.push(comment);
-                            query_res = Event.save(event);
+                            //query_res = Event.save(event);
                             query_res.then(function(respuesta){
                                 if(respuesta){
-                                    res.status(200).jsonp(response.successfulResponse(labels.SUCC000, respuesta));
+                                    res.status(200).jsonp(response.successfulResponse(labels.SUCC000, 'Agregado Correctamente'));
                                 }else{
                                     res.status(400).jsonp(response.errorResponse(400,labels.ERRA003))
                                 }
@@ -78,7 +79,7 @@ exports.addCommentToSessionOfEvent = function(req, res) {
                     });
                 } else {
                     res.status(400).jsonp(response.errorResponse(500,labels.ERRA006, err.message));
-                }
+                }*/
             });
         }
     } catch (handler) {
