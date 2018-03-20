@@ -50,6 +50,9 @@ api.route('/authentication').post(userCtrl.authentication);
 api.route('/event').get(eventCtrl.getAllEvents);
 api.route('/event/:id').get(eventCtrl.getEventDetail);
 api.route('/comment/add').post(eventCtrl.addCommentToSessionOfEvent);
+api.route('/evaluation/add').post(eventCtrl.addEvaluationToSpeech);
+api.route('/inscription/add').post(eventCtrl.addInscription);
+
 
 // Start server
 app.listen(port, function() {

@@ -50,41 +50,124 @@ exports.getEventDetail = function(req, res) {
 
 exports.addCommentToSessionOfEvent = function(req, res) {
     try {
-        if ((!response.isValidID(req.body.idEvent)) && (!response.isValidID(req.body.idSession)) && (!response.isValidID(req.body.idUser))){
+        if ((!response.isValidID(req.body.idEvent)) && (!response.isValidID(req.body.idSession))){
             res.status(500).send(response.errorResponse(400,labels.ERRA005));
         } else {
             var query = Event.findById(req.body.idEvent).exec();
-            var query_res;
-            var prueba = [];
-
             query.then(function(event){
                 if(event) {
-                    res.status(200).jsonp(response.successfulResponse(labels.SUCC000, event));
-                    /*event.forEach(function(session) {
+                    var counter = 0;
+                    event.sessions.forEach(function(session) {
                         if(session._id.toString() == req.body.idSession) {
                             var comment = {
-                                idUser : req.body.idUser,
                                 text : req.body.comment
                             };
-                            //event.session.comments.push(comment);
-                            //query_res = Event.save(event);
+                            session.comments.push(comment);
+                            var query_res = event.save();
                             query_res.then(function(respuesta) {
                                 if(respuesta){
-                                    res.status(200).jsonp(response.successfulResponse(labels.SUCC000, 'Agregado Correctamente'));
+                                    res.status(200).jsonp(response.successfulResponse(labels.SUCC013, respuesta.sessions[counter].comments));
                                 }else{
                                     res.status(400).jsonp(response.errorResponse(400,labels.ERRA003))
                                 }
                             }).catch(function(err){
-                                res.status(500).jsonp(response.errorResponse(500,labels.ERRA006, err.message));
+                                res.status(500).jsonp(response.errorResponse(500,labels.ERRA012, err.message));
                             });
                         }
-                    });*/
+                        counter++;
+                    });
                 } else {
-                    res.status(400).jsonp(response.errorResponse(400,labels.ERRA006, err.message));
+                    res.status(400).jsonp(response.errorResponse(400,labels.ERRA012));
                 }
             });
         }
     } catch (handler) {
-        res.status(500).send(response.errorResponse(500,labels.ERRA006, handler.message));
+        res.status(500).send(response.errorResponse(500,labels.ERRA012, handler.message));
+    }
+};
+
+exports.addEvaluationToSpeech = function(req, res) {
+    try {
+        if ((!response.isValidID(req.body.idEvent)) && (!response.isValidID(req.body.idSession)) && (!response.isValidID(req.body.idSpeech))){
+            res.status(500).send(response.errorResponse(400,labels.ERRA005));
+        } else {
+            var query = Event.findById(req.body.idEvent).exec();
+            query.then(function(event){
+                if(event) {
+                    event.sessions.forEach(function(session) {
+                        if(session._id.toString() == req.body.idSession) {
+                            session.speechs.forEach(function(speech){
+                                if(speech._id.toString() == req.body.idSpeech) {
+                                    var evaluation = {
+                                        evaluation : req.body.evaluation
+                                    };
+                                    speech.evaluations.push(evaluation);
+                                    var query_res = event.save();
+                                    query_res.then(function(respuesta) {
+                                        if(respuesta){
+                                            res.status(200).jsonp(response.successfulResponse(labels.SUCC014,''));
+                                        }else{
+                                            res.status(400).jsonp(response.errorResponse(400,labels.ERRA015))
+                                        }
+                                    }).catch(function(err){
+                                        res.status(500).jsonp(response.errorResponse(500,labels.ERRA015, err.message));
+                                    });
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    res.status(400).jsonp(response.errorResponse(400,labels.ERRA015));
+                }
+            });
+        }
+    } catch (handler) {
+        res.status(500).send(response.errorResponse(500,labels.ERRA015, handler.message));
+    }
+};
+
+exports.addInscription = function(req, res) {
+    try {
+        if ((!response.isValidID(req.body.idEvent))){
+            res.status(500).send(response.errorResponse(400,labels.ERRA005));
+        } else {
+            var query = Event.findById(req.body.idEvent).exec();
+            query.then(function(event){
+                if(event) {
+                    var codeUse = false;
+                    event.inscriptions.forEach(function(inscription){
+                        if(inscription.code == req.body.code){
+                            codeUse = true;
+                            res.status(400).jsonp(response.errorResponse(400,labels.ERRA017))
+                        }
+                    });
+                    if(!codeUse){
+                        var inscription = {
+                            name: req.body.name,
+                            lastname: req.body.lastname,
+                            email: req.body.email,
+                            phone: req.body.phone,
+                            company: req.body.company,
+                            code: req.body.code
+                        }
+                        event.inscriptions.push(inscription);
+                        var query_res = event.save();
+                        query_res.then(function(respuesta) {
+                            if(respuesta){
+                                res.status(200).jsonp(response.successfulResponse(labels.SUCC015,''));
+                            }else{
+                                res.status(400).jsonp(response.errorResponse(400,labels.ERRA016))
+                            }
+                        }).catch(function(err){
+                            res.status(500).jsonp(response.errorResponse(500,labels.ERRA016, err.message));
+                        });
+                    }
+                } else {
+                    res.status(400).jsonp(response.errorResponse(400,labels.ERRA016));
+                }
+            });
+        }
+    } catch (handler) {
+        res.status(500).send(response.errorResponse(500,labels.ERRA016, handler.message));
     }
 };

@@ -40,12 +40,23 @@ var eventSchema = new Schema({
             author: { type : String },
             job: { type : String },
             image: { type : String },
-            description: { type : String }
+            description: { type : String },
+            evaluations: [{
+                evaluation: { type : String }
+            }]
         }],
         comments:[{
-            idUser : { type : Schema.ObjectId, ref: 'author', required: true },
             text : { type: String }
-        }],
+        }]
+    }],
+    inscriptions:[{
+        name: { type : String },
+        lastname: { type : String },
+        email: { type : String },
+        phone: { type : String },
+        company: { type : String },
+        name: { type : String },
+        code: { type : String }
     }]
 });
 
