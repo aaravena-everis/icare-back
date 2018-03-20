@@ -59,7 +59,7 @@ exports.addCommentToSessionOfEvent = function(req, res) {
                 if(event) {
                     event.forEach(function(session) {
                         if(session._id.toString() == req.body.idSession) {
-                                res.status(200).jsonp(response.successfulResponse(labels.SUCC000, session));
+                                res.status(200).jsonp(response.successfulResponse(labels.SUCC000, event));
                            /* var comment = {
                                 idUser : req.body.idUser,
                                 text : req.body.comment
