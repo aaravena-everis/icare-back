@@ -42,7 +42,7 @@ var eventSchema = new Schema({
             image: { type : String },
             description: { type : String },
             evaluations: [{
-                evaluation: { type : String }
+                evaluation: { type : Number }
             }]
         }],
         comments:[{
@@ -55,7 +55,6 @@ var eventSchema = new Schema({
         email: { type : String },
         phone: { type : String },
         company: { type : String },
-        name: { type : String },
         code: { type : String }
     }]
 });

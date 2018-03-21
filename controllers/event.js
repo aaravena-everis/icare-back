@@ -88,6 +88,13 @@ exports.addCommentToSessionOfEvent = function(req, res) {
     }
 };
 
+Array.prototype.sum = function (prop) {
+    var total = 0
+    for ( var i = 0, _len = this.length; i < _len; i++ ) {
+        total += this[i][prop]
+    }
+    return total
+}
 exports.addEvaluationToSpeech = function(req, res) {
     try {
         if ((!response.isValidID(req.body.idEvent)) && (!response.isValidID(req.body.idSession)) && (!response.isValidID(req.body.idSpeech))){
@@ -101,13 +108,18 @@ exports.addEvaluationToSpeech = function(req, res) {
                             session.speechs.forEach(function(speech){
                                 if(speech._id.toString() == req.body.idSpeech) {
                                     var evaluation = {
-                                        evaluation : req.body.evaluation
+                                        evaluation : parseInt(req.body.evaluation, 10)
                                     };
                                     speech.evaluations.push(evaluation);
                                     var query_res = event.save();
                                     query_res.then(function(respuesta) {
                                         if(respuesta){
-                                            res.status(200).jsonp(response.successfulResponse(labels.SUCC014,''));
+                                            var promedio = Math.round((speech.evaluations.sum("evaluation")/speech.evaluations.length) * 10)/10;
+                                            var response_data = {
+                                                "total" : speech.evaluations.length,
+                                                "average": promedio
+                                            }
+                                            res.status(200).jsonp(response.successfulResponse(labels.SUCC014,response_data));
                                         }else{
                                             res.status(400).jsonp(response.errorResponse(400,labels.ERRA015))
                                         }
