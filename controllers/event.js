@@ -198,23 +198,21 @@ exports.addCommentToSpeech = function(req, res) {
                         if(session._id.toString() == req.body.idSession) {
                             session.speechs.forEach(function(speech){
                                 if(speech._id.toString() == req.body.idSpeech) {
-
-
                                     var comment = {
                                         text : req.body.comment
                                     };
                                     speech.comments.push(comment);
-
                                     var query_res = event.save();
                                     query_res.then(function(respuesta) {
                                         if(respuesta){
-                                            res.status(200).jsonp(response.successfulResponse(labels.SUCC013, respuesta.speech.comments));
+                                            res.status(200).jsonp(response.successfulResponse(labels.SUCC013, speech.comments));
                                         }else{
                                             res.status(400).jsonp(response.errorResponse(400,labels.ERRA003))
                                         }
                                     }).catch(function(err){
                                         res.status(500).jsonp(response.errorResponse(500,labels.ERRA015, err.message));
                                     });
+                                    
                                 }
                             });
                         }
