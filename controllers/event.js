@@ -185,3 +185,46 @@ exports.addInscription = function(req, res) {
         res.status(500).send(response.errorResponse(500,labels.ERRA016, handler.message));
     }
 };
+
+exports.addCommentToSpeech = function(req, res) {
+    try {
+        if ((!response.isValidID(req.body.idEvent)) && (!response.isValidID(req.body.idSession)) && (!response.isValidID(req.body.idSpeech))){
+            res.status(500).send(response.errorResponse(400,labels.ERRA005));
+        } else {
+            var query = Event.findById(req.body.idEvent).exec();
+            query.then(function(event){
+                if(event) {
+                    event.sessions.forEach(function(session) {
+                        if(session._id.toString() == req.body.idSession) {
+                            session.speechs.forEach(function(speech){
+                                if(speech._id.toString() == req.body.idSpeech) {
+
+
+                                    var comment = {
+                                        text : req.body.comment
+                                    };
+                                    speech.comments.push(comment);
+
+                                    var query_res = event.save();
+                                    query_res.then(function(respuesta) {
+                                        if(respuesta){
+                                            res.status(200).jsonp(response.successfulResponse(labels.SUCC013, respuesta.speech[realCounter].comments));
+                                        }else{
+                                            res.status(400).jsonp(response.errorResponse(400,labels.ERRA003))
+                                        }
+                                    }).catch(function(err){
+                                        res.status(500).jsonp(response.errorResponse(500,labels.ERRA015, err.message));
+                                    });
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    res.status(400).jsonp(response.errorResponse(400,labels.ERRA015));
+                }
+            });
+        }
+    } catch (handler) {
+        res.status(500).send(response.errorResponse(500,labels.ERRA015, handler.message));
+    }
+};

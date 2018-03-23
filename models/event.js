@@ -43,11 +43,11 @@ var eventSchema = new Schema({
             description: { type : String },
             evaluations: [{
                 evaluation: { type : Number }
+            }],
+            comments:[{
+                text : { type: String }
             }]
         }],
-        comments:[{
-            text : { type: String }
-        }]
     }],
     inscriptions:[{
         name: { type : String },
