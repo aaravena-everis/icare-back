@@ -208,7 +208,7 @@ exports.addCommentToSpeech = function(req, res) {
                                     var query_res = event.save();
                                     query_res.then(function(respuesta) {
                                         if(respuesta){
-                                            res.status(200).jsonp(response.successfulResponse(labels.SUCC013, respuesta.speech[realCounter].comments));
+                                            res.status(200).jsonp(response.successfulResponse(labels.SUCC013, respuesta.speech.comments));
                                         }else{
                                             res.status(400).jsonp(response.errorResponse(400,labels.ERRA003))
                                         }
