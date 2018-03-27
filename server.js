@@ -40,18 +40,19 @@ var models = require('./models');
 var authorCtrl = require('./controllers/author');
 var eventCtrl = require('./controllers/event');
 var userCtrl = require('./controllers/user');
+var streamCtrl = require('./controllers/stream');
 
 // API routes
 app.use('/api', api);
 api.route('/author/:id').get(authorCtrl.getAuthor);
 api.route('/user').post(userCtrl.add);
 api.route('/authentication').post(userCtrl.authentication);
-//desde Event Controller
 api.route('/event').get(eventCtrl.getAllEvents);
 api.route('/event/:id').get(eventCtrl.getEventDetail);
 api.route('/comment/add').post(eventCtrl.addCommentToSpeech);
 api.route('/evaluation/add').post(eventCtrl.addEvaluationToSpeech);
 api.route('/inscription/add').post(eventCtrl.addInscription);
+api.route('/url-stream').get(streamCtrl.getStreamUrl);
 
 
 // Start server
