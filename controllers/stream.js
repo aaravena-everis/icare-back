@@ -4,7 +4,6 @@ var labels         = require('../config/labels');
 var mongoose = require('mongoose');
 var StreamBD = mongoose.model('stream');
 
-
 exports.getStreamUrl = function(req, res) {
     var query = StreamBD.find({}).exec();
     var r_stream_list= [];
