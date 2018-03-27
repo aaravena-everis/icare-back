@@ -1,4 +1,4 @@
 require('./author');
 require('./event');
 require('./user');
-require('./stream');
+require('./stream-url');

@@ -6,4 +6,4 @@ var streamSchema = new Schema({
 	active: { type : Boolean, required: true}
 });
 
-module.exports = mongoose.model('stream', streamSchema);
+module.exports = mongoose.model('stream-url', streamSchema);

@@ -40,7 +40,7 @@ var models = require('./models');
 var authorCtrl = require('./controllers/author');
 var eventCtrl = require('./controllers/event');
 var userCtrl = require('./controllers/user');
-var streamCtrl = require('./controllers/stream');
+var streamCtrl = require('./controllers/stream-url');
 
 // API routes
 app.use('/api', api);
