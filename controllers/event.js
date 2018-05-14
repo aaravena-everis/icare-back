@@ -6,7 +6,12 @@ var Event = mongoose.model('event');
 
 
 exports.getAllEvents = function(req, res) {
-    var query = Event.find({}).exec();
+    var today = new Date();
+    //today.setHours(-3,0,0,0);
+    today.setHours(today.getHours()-4)
+
+    var query = Event.find({time_end: {$gte: today}}).exec();
+    //var query = Event.find({}).exec();
     var r_event_list= [];
     query.then(function(events){
         events.forEach(function(event){
@@ -26,6 +31,96 @@ exports.getAllEvents = function(req, res) {
         res.status(500).jsonp(response.errorResponse(500,labels.ERRA006, err.message));
     });
 };
+
+exports.getFeaturedEvents = function(req, res) {
+    var today = new Date();
+    //today.setHours(-3,0,0,0);
+    today.setHours(today.getHours()-4)
+
+    var query = Event.find({time_end: {$gte: today}, "featured": true }).exec();
+    //var query = Event.find({"featured": true }).exec();
+    var r_event_list= [];
+    query.then(function(events){
+        events.forEach(function(event){
+            var r_event = {
+                title: event.title,
+                subtitle: event.subtitle,
+                date: event.date,
+                location: event.location.name,
+                image: event.image,
+                featured: event.featured,
+                id: event._id
+            };
+            r_event_list.push(r_event);
+        });
+        res.status(200).jsonp(response.successfulResponse(labels.SUCC000, r_event_list));
+    }).catch(function(err){
+        res.status(500).jsonp(response.errorResponse(500,labels.ERRA006, err.message));
+    });
+};
+
+exports.getArchiveEvents = function(req, res) {
+    var today = new Date();
+    //today.setHours(-3,0,0,0);
+    today.setHours(today.getHours()-4)
+
+    var query = Event.find({time_start: {$lte: today}, "archived": true, "featured": true}).exec();
+    //var query = Event.find({"archived": true }).exec();
+    var r_event_list= [];
+    query.then(function(events){
+        events.forEach(function(event){
+            var r_event = {
+                title: event.title,
+                subtitle: event.subtitle,
+                date: event.date,
+                location: event.location.name,
+                image: event.image,
+                featured: event.featured,
+                archived: event.archived,
+                id: event._id
+            };
+            r_event_list.push(r_event);
+        });
+        res.status(200).jsonp(response.successfulResponse(labels.SUCC000, r_event_list));
+    }).catch(function(err){
+        res.status(500).jsonp(response.errorResponse(500,labels.ERRA006, err.message));
+    });
+};
+
+exports.getTodayEvent = function(req, res) {
+
+    var today = new Date();
+    var today2 = new Date();
+    console.log(today)
+    //today.setHours(-3,0,0,0);
+    today.setHours(today.getHours()-4)
+    today2.setHours(today2.getHours()-2)
+    console.log(today)
+    console.log(today2)
+
+    var query = Event.find({time_end: {$gte: today}, time_start: {$lte: today2}}).exec();
+
+    var r_event_list= [];
+        query.then(function(events){
+            events.forEach(function(event){
+                var r_event = {
+                    title: event.title,
+                    subtitle: event.subtitle,
+                    date: event.date,
+                    location: event.location.name,
+                    image: event.image,
+                    featured: event.featured,
+                    id: event._id,
+                    time_start: event.time_start,
+                    time_end: event.time_end
+                };
+                r_event_list.push(r_event);
+            });
+            res.status(200).jsonp(response.successfulResponse(labels.SUCC000, r_event_list));
+        }).catch(function(err){
+            res.status(500).jsonp(response.errorResponse(500,labels.ERRA006, err.message));
+        });
+}
 
 exports.getEventDetail = function(req, res) {
     try {
@@ -62,7 +157,8 @@ exports.addCommentToSessionOfEvent = function(req, res) {
                         if(session._id.toString() == req.body.idSession) {
                             realCounter = counter;
                             var comment = {
-                                text : req.body.comment
+                                text : req.body.comment,
+                                userName: req.body.userName
                             };
                             session.comments.push(comment);
                             var query_res = event.save();
@@ -199,7 +295,8 @@ exports.addCommentToSpeech = function(req, res) {
                             session.speechs.forEach(function(speech){
                                 if(speech._id.toString() == req.body.idSpeech) {
                                     var comment = {
-                                        text : req.body.comment
+                                        text : req.body.comment,
+                                        userName: req.body.userName
                                     };
                                     speech.comments.push(comment);
                                     var query_res = event.save();

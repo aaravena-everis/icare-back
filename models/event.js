@@ -5,6 +5,9 @@ var eventSchema = new Schema({
     title : { type : String, required: true  },
     subtitle : { type : String },
     date : { type : Date },
+    time_start : { type : Date },
+    time_end : { type :  Date },
+    archived: { type: Boolean },
     image : { type : String },
     featured : { type : Boolean},
     description : { type : String },
@@ -36,17 +39,19 @@ var eventSchema = new Schema({
             rol: { type : String }
         }],
         speechs:[{
-            idAuthor : { type : Schema.ObjectId, ref: 'author', required: true },
+            idAuthor : { type : Schema.ObjectId, ref: 'author' },
             title: { type : String },
             author: { type : String },
             job: { type : String },
             image: { type : String },
             description: { type : String },
+            pdf: { type : String },
             evaluations: [{
                 evaluation: { type : Number }
             }],
             comments:[{
-                text : { type: String }
+                text : { type: String },
+                userName : { type: String }
             }]
         }],
     }],
