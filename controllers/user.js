@@ -296,7 +296,7 @@ exports.listContacts = function(req, res) {
 }
 
 exports.listActiveUsers = function(req, res) {
-    var query = User.find({"share": true}).exec();
+    var query = User.find({"share": true}).sort( { lastName: 1 } ).exec();
 
     var r_user_list= [];
     query.then(function(users){
