@@ -1,0 +1,76 @@
+{
+    "_id" : ObjectId("5ad7a554670e82abde2af61d"),
+    "location" : {
+        "coordinates" : [],
+        "name" : "HOTEL RITZ-CARLTON",
+        "streetName" : null,
+        "streetNumber" : null,
+        "district" : null,
+        "region" : null,
+        "country" : null
+    },
+    "title" : "Coyuntura Económica y Perspectivas",
+    "subtitle" : "Finanzas",
+    "date" : ISODate("2018-03-22T00:00:00.000Z"),
+    "time_start" : ISODate("2018-03-22T08:30:00.000Z"),
+    "time_end" : ISODate("2018-03-22T10:45:00.000Z"),
+    "archived" : true,
+    "image" : "http://www.icare.cl/assets/uploads/2017/11/pagina-web--bannerwebnew-ipom-2-1280x540-c-default.jpg",
+    "featured" : true,
+    "description" : null,
+    "manifest" : null,
+    "ticket" : null,
+    "sessions" : [ 
+        {
+            "number" : null,
+            "name" : "IPoM marzo 2018",
+            "description" : null,
+            "startHour" : null,
+            "finishHour" : null,
+            "moderators" : [],
+            "speechs" : [ 
+                {
+                    "title" : null,
+                    "author" : "Mario Marcel",
+                    "job" : "Presidente del Banco Central de Chile",
+                    "image" : "http://www.icare.cl/assets/uploads/2017/10/mario-marcel-120x120-c-default.jpg",
+                    "pdf" : "http://www.icare.cl/assets/uploads/2018/03/icare_marzo-2018_v3_version-sala.pdf",
+                    "description" : null,
+                    "evaluations" : [],
+                    "comments" : []
+                }
+            ]
+        }, 
+        {
+            "number" : null,
+            "name" : "Perspectivas 2018",
+            "description" : null,
+            "startHour" : null,
+            "finishHour" : null,
+            "moderators" : [],
+            "speechs" : [ 
+                {
+                    "title" : null,
+                    "author" : "Manola Sánchez",
+                    "job" : "Directora Banco BCI",
+                    "image" : "http://www.icare.cl/assets/uploads/2018/03/1-1-e1520621988881-120x120-c-default.jpg",
+                    "pdf" : "http://www.icare.cl/assets/uploads/2018/03/presentacion-icare-final.pdf",
+                    "description" : null,
+                    "evaluations" : [],
+                    "comments" : []
+                }, 
+                {
+                    "title" : null,
+                    "author" : "Klaus Schmidt-Hebbel",
+                    "job" : "Profesor Titular Instituto de Economía de la P. Universidad Católica de Chile",
+                    "image" : "http://www.icare.cl/assets/uploads/2018/03/klaus-schmindt-hebbel-e1520622028441-120x120-c-default.jpg",
+                    "pdf" : "http://www.icare.cl/assets/uploads/2018/03/k-schmidt-hebbel-presentacion-ipom-seminario-icare-220318.pdf",
+                    "description" : null,
+                    "evaluations" : [],
+                    "comments" : []
+                }
+            ]
+        }
+    ],
+    "inscriptions" : []
+}
