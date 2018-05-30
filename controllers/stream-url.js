@@ -7,14 +7,12 @@ var StreamBD = mongoose.model('stream-url');
 exports.getStreamUrl = function(req, res) {
     var query = StreamBD.find({}).exec();
     query.then(function(streamUrls){
-        console.log("---STREAMURLS---")
         var r_stream
         streamUrls.forEach(function(streamUrl){
             r_stream = {
                 urlStream: streamUrl.urlStream,
                 active: streamUrl.active,
             };
-            
         });
         res.status(200).jsonp(response.successfulResponse(labels.SUCC000, r_stream));
     }).catch(function(err){

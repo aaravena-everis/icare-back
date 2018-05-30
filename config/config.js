@@ -11,6 +11,7 @@ config.dbOptions = {
     user: 'icappmongo',
     pass: '58Ozdus3NFfPf5pky1PF5LpINEsz2oBTHiPXq28QRRIzUIQf2h00VZfwK3Zwf17mwIIWWWOmonG6BSiCUUd2sQ=='
 };
+
 config.dbEndpoint = 'mongodb://icappmongo.documents.azure.com:10255/mobileapp?ssl=true&replicaSet=globaldb';
 
 config.web.port = process.env.PORT || 8080;

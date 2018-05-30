@@ -302,8 +302,8 @@ exports.listActiveUsers = function(req, res) {
     query.then(function(users){
         users.forEach(function(user){
             var r_user = {
-                name: user.name,
-                lastName: user.lastName,
+                name: user.name.toLowerCase(),
+                lastName: user.lastName.toLowerCase(),
                 occupation: user.occupation,
                 company: user.company,
                 job: user.job,
@@ -313,6 +313,7 @@ exports.listActiveUsers = function(req, res) {
             };
             r_user_list.push(r_user);
         });
+
         res.status(200).jsonp(response.successfulResponse(labels.SUCC000, r_user_list));
     }).catch(function(err){
         res.status(500).jsonp(response.errorResponse(500,labels.ERRA006, err.message));
